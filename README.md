@@ -1,5 +1,12 @@
-# Cairo Smart City Transportation Network Optimization
+# 🚗 Cairo Smart City Transportation Network Optimization
+
+**CSE112 — Design & Analysis of Algorithms**
+Alamein International University · Faculty of Computer Science & Engineering
+
+---
+
 ## 📋 Table of Contents
+
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Project Structure](#project-structure)
@@ -12,15 +19,25 @@
 - [Technical Report Summary](#technical-report-summary)
 - [Bonus Features](#bonus-features)
 - [Team](#team)
+
+---
+
 ## 🌍 Project Overview
+
 This project implements a **comprehensive transportation optimization system** for the **Greater Cairo metropolitan area**. Using real geographic and traffic data for Cairo's 15 districts and 10 key facilities, the system applies advanced algorithms from CSE112 to solve real-world urban mobility problems:
+
 - Finding shortest routes between neighborhoods
 - Designing cost-efficient road infrastructure
 - Routing emergency vehicles to hospitals
 - Optimizing public bus and metro schedules
 - Predicting traffic congestion using machine learning
+
 The system covers a network of **25 nodes** (districts + facilities), **27 existing roads**, and **15 potential new roads** with real-world traffic flow data across four time periods (morning peak, afternoon, evening peak, night).
+
+---
+
 ## ✨ Features
+
 | Feature | Algorithm | Status |
 |---|---|---|
 | Infrastructure network design | Kruskal's MST | ✅ Phase 2 |
@@ -34,7 +51,12 @@ The system covers a network of **25 nodes** (districts + facilities), **27 exist
 | Dijkstra vs A\* race animation | Side-by-side visualizer | 🔄 Bonus |
 | Live web demo | Deployed on Vercel | 🔄 Bonus |
 | Docker containerization | Docker | 🔄 Bonus |
+
+---
+
 ## 📁 Project Structure
+
+```
 cairo_transport/
 │
 ├── src/
@@ -67,9 +89,16 @@ cairo_transport/
 ├── Dockerfile                  # Container setup (Bonus)
 ├── requirements.txt            # Python dependencies
 └── README.md
+```
+
+---
+
 ## 📊 Dataset
+
 All data is sourced from the **CSE112 Project Provided Data** for the Greater Cairo metropolitan area.
+
 ### Districts (15 nodes)
+
 | ID | Name | Population | Type |
 |---|---|---|---|
 | 1 | Maadi | 250,000 | Residential |
@@ -81,7 +110,9 @@ All data is sourced from the **CSE112 Project Provided Data** for the Greater Ca
 | 8 | Giza | 550,000 | Mixed |
 | 13 | New Administrative Capital | 50,000 | Government |
 | ... | *(15 districts total)* | | |
+
 ### Key Facilities (10 nodes)
+
 | ID | Name | Type |
 |---|---|---|
 | F1 | Cairo International Airport | Airport |
@@ -90,40 +121,59 @@ All data is sourced from the **CSE112 Project Provided Data** for the Greater Ca
 | F10 | Maadi Military Hospital | Medical ⚠️ Critical |
 | F7 | Smart Village | Business |
 | ... | *(10 facilities total)* | |
+
 ### Road Network
+
 - **27 existing roads** with distance, capacity, condition rating (1–10), and traffic flow data
 - **15 potential new roads** with construction cost (Million EGP)
 - **Traffic data** per road: morning peak / afternoon / evening peak / night (vehicles/hour)
 
 ### Public Transportation
+
 - **3 metro lines** (Lines 1, 2, 3) serving 3.5M+ daily passengers combined
 - **10 bus routes** (B1–B10) with assigned fleet sizes
 - **17 origin-destination demand pairs**
+
+---
+
 ## ⚙️ Algorithms Implemented
+
 ### A. Minimum Spanning Tree — Kruskal's Algorithm
+
 Designs a cost-efficient road network connecting all 25 nodes while:
 - Minimizing total construction and maintenance cost
 - Guaranteeing connectivity for **critical facilities** (hospitals, airport, railway station, government capital)
 - Considering both existing roads and potential new constructions
+
 **Complexity:** O(E log E) for sorting + O(E α(V)) for Union-Find operations
+
 ### B. Shortest Path — Dijkstra's Algorithm
+
 Finds optimal routes between any two locations using:
 - **Basic mode:** edge weight = road distance
 - **Condition-adjusted mode:** penalises poor-quality roads — weight = distance × (11 - condition) / 10
 - **Time-variant mode:** accounts for rush-hour congestion — weight scales with flow/capacity ratio
+
 **Complexity:** O((V + E) log V) with a binary heap priority queue
+
 ### C. Shortest Path — A\* Search
+
 Used for **emergency vehicle routing** to medical facilities with:
 - Haversine geodetic distance as the admissible heuristic
 - Priority preemption system at major intersections
 - Guaranteed to find the optimal path faster than Dijkstra in practice
+
 **Complexity:** O(E log V) with geographic heuristic
+
 ### D. Dynamic Programming — Transit Scheduling
+
 Optimizes the allocation of buses and metro trains across routes by:
 - Modelling the problem as a bounded knapsack (maximize daily passengers subject to fleet constraints)
 - Using memoization to cache sub-problem solutions
 - Producing a schedule that maximizes coverage and minimizes travel time
+
 **Complexity:** O(routes × fleet_size)
+
 ### E. Dynamic Programming — Road Maintenance
 
 Allocates a fixed maintenance budget across roads with poor condition ratings:
@@ -138,7 +188,9 @@ At each major intersection, greedily assigns green-light time proportional to in
 - Emergency preemption overrides during high-congestion periods
 - Analyzes both optimal and suboptimal cases in the Cairo context
 
-## Setup & Installation
+---
+
+## 🛠️ Setup & Installation
 
 ### Prerequisites
 
@@ -147,30 +199,32 @@ At each major intersection, greedily assigns green-light time proportional to in
 
 ### Install dependencies
 
-bash
+```bash
 git clone https://github.com/your-username/cairo-transport.git
 cd cairo-transport
 pip install -r requirements.txt
-
+```
 
 ### requirements.txt
-umpy>=1.24
+
+```
+numpy>=1.24
 pandas>=2.0
 scikit-learn>=1.3
 matplotlib>=3.7
 networkx>=3.1
 pytest>=7.4
 flask>=3.0          # for demo
-
+```
 
 ### Run verification
 
-bash
+```bash
 python -c "from src import build_cairo_graph; g = build_cairo_graph(); print(g.summary())"
-
+```
 
 Expected output:
-
+```
 ========================================================
   Cairo Transportation Network — Graph Summary
 ========================================================
@@ -186,58 +240,60 @@ Expected output:
     [F1]  Cairo International Airport
     [13]  New Administrative Capital
 ========================================================
+```
 
 ### Run all tests
 
-bash
+```bash
 pytest tests/ -v
+```
 
-
-
+---
 
 ## 🟡 Running on Google Colab
 
 Open [Google Colab](https://colab.research.google.com) and run these cells in order:
 
 **Cell 1 — Setup**
-python
+```python
 !git clone https://github.com/your-username/cairo-transport.git
 %cd cairo-transport
 !pip install -r requirements.txt -q
+```
 
 **Cell 2 — Build and inspect the graph**
-python
+```python
 import sys
 sys.path.insert(0, '/content/cairo-transport')
 
 from src import build_cairo_graph
 graph = build_cairo_graph()
 print(graph.summary())
-
+```
 
 **Cell 3 — Congestion analysis**
-python
+```python
 print("Top 5 Most Congested Roads — Morning Rush Hour")
 for edge, ratio in graph.most_congested_roads("morning", top_n=5):
     src = graph.get_node(edge.from_id).name
     dst = graph.get_node(edge.to_id).name
     print(f"  {src} → {dst}: {ratio:.1%}  [{edge.congestion_level('morning')}]")
-
+```
 
 **Cell 4 — Run tests**
-python
+```python
 !pytest tests/test_phase1.py -v
+```
 
+> 💡 **Tip:** If you see `ModuleNotFoundError: No module named 'src'`, re-run Cell 1 to ensure the path is set correctly.
 
-> 💡 **Tip:** If you see ModuleNotFoundError: No module named 'src', re-run Cell 1 to ensure the path is set correctly.
-
-
+---
 
 ## 🚀 Usage
 
 ### Build the graph
 
-python
+```python
 from src import build_cairo_graph
 
 # Full graph (existing + potential roads)
@@ -245,55 +301,56 @@ graph = build_cairo_graph()
 
 # Existing roads only
 graph = build_cairo_graph(include_potential=False)
-
+```
 
 ### Find shortest path (Dijkstra)
 
-python
+```python
 from src.algorithms.dijkstra import dijkstra
 
 path, cost = dijkstra(graph, start="1", end="13")  # Maadi → New Admin Capital
 print(f"Route: {' → '.join(path)}")
 print(f"Cost : {cost:.2f} km")
-
+```
 
 ### Route an emergency vehicle (A\*)
 
-python
+```python
 from src.algorithms.astar import astar
 
 path, cost = astar(graph, start="7", goal="F9")   # 6th Oct City → Qasr El Aini Hospital
 print(f"Emergency route: {' → '.join(path)}")
-
+```
 
 ### Time-dependent routing
 
-python
+```python
 from src.algorithms.dijkstra import dijkstra_time_dependent
 
 path, cost = dijkstra_time_dependent(graph, start="2", end="3", period="morning")
 print(f"Morning rush route (Nasr City → Downtown): {' → '.join(path)}")
-
+```
 
 ### Run MST network design
 
-python
+```python
 from src.algorithms.mst import kruskal_mst
 
 mst_edges, total_cost = kruskal_mst(graph)
 print(f"MST connects all 25 nodes with {len(mst_edges)} edges")
 print(f"Total cost: {total_cost:.2f}")
-
+```
 
 ### Optimize transit schedule (DP)
 
-python
+```python
 from src.algorithms.dynamic_programming import optimize_transit_schedule
 from src import load_public_transport
 
 metro, buses, demand = load_public_transport()
 schedule = optimize_transit_schedule(buses, total_fleet=264)
 print(schedule)
+```
 
 ---
 
@@ -350,9 +407,24 @@ The demo is deployed at: **[https://cairo-transport.vercel.app](https://cairo-tr
 
 ### Docker Container (3 marks)
 
-bash
+```bash
 docker build -t cairo-transport .
 docker run -p 5000:5000 cairo-transport
+```
+
+---
+
+## 👥 Team
+
+| Name | Student ID | Role |
+|---|---|---|
+| *(Your Name)* | *(ID)* | Full Stack |
+
+**Course:** CSE112 — Design & Analysis of Algorithms
+**Instructor:** Eng. Ahmed M. Yahia
+**University:** Alamein International University
+
+---
 
 ## 📜 License
 
