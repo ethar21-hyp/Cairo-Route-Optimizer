@@ -1,7 +1,5 @@
 # 🚗 Cairo Smart City Transportation Network Optimization
 
-**CSE112 — Design & Analysis of Algorithms**
-Alamein International University · Faculty of Computer Science & Engineering
 
 ---
 
@@ -414,15 +412,6 @@ docker run -p 5000:5000 cairo-transport
 
 ---
 
-## 👥 Team
-
-| Name | Student ID | Role |
-|---|---|---|
-| *(Your Name)* | *(ID)* | Full Stack |
-
-**Course:** CSE112 — Design & Analysis of Algorithms
-**Instructor:** Eng. Ahmed M. Yahia
-**University:** Alamein International University
 
 ---
 
